@@ -1,3 +1,10 @@
+// SearchComponent
+
+// Provides a search input box and search button to query movies.
+// Emits search queries to the parent component using an Event Emitter.
+// The parent component (Home Component) listens to the 'search' event and fetches results.
+// Query is trimmed and validated before emitting.
+
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -12,9 +19,10 @@ export class SearchComponent {
   query = '';
   @Output() search = new EventEmitter<string>();
 
-  onSearch() {
-    if (this.query.trim()) {
-      this.search.emit(this.query);
-    }
+onSearch() {
+  const cleanQuery = this.query.trim();
+  if (cleanQuery) {
+    this.search.emit(cleanQuery.toLowerCase());
   }
+}
 }

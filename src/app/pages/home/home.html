@@ -1,7 +1,16 @@
+<!-- Home Page Template
+
+Displays the main layout:
+- Title and subtitle
+- Search component
+- Loading indicator when fetching movies
+- Error message if API fails
+- Movie grid
+-->
+
+
 <div class="app-container">
-
   <h1 class="title">🎬 Movie Finder</h1>
-
   <p class="subtitle">Search for any movie using the TMDB API</p>
 
   <app-search (search)="onSearch($event)"></app-search>
@@ -14,11 +23,14 @@
     {{ error }}
   </div>
 
+  <div *ngIf="!loading && movies.length === 0 && !error" class="no-results">
+    No movies found. Try a different search.
+  </div>
+
   <div class="movie-grid">
     <app-movie-card
       *ngFor="let movie of movies"
       [movie]="movie">
     </app-movie-card>
   </div>
-
 </div>

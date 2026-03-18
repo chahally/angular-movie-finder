@@ -1,3 +1,11 @@
+// Home Component
+
+// Main page component displaying movie search results.
+// Handles:
+// - movies: array of movie objects
+// - loading: boolean for API call in progress
+// - error: string for API errors
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Movie } from '../../models/movie.model';
@@ -12,6 +20,7 @@ import { SearchComponent } from '../../components/search/search';
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
+
 export class HomeComponent {
   movies: Movie[] = [];
   loading = false;
@@ -20,21 +29,27 @@ export class HomeComponent {
   constructor(private movieService: MovieService) {}
 
   onSearch(query: string) {
-  console.log("Searching for:", query);
+    this.loading = true;
+    this.error = null;
 
-  this.loading = true;
-  this.error = null;
-
-  this.movieService.searchMovies(query).subscribe({
-    next: movies => {
-      console.log("Movies returned:", movies);
-      this.movies = movies;
+    if (!query) {
+      this.movies = [];
       this.loading = false;
-    },
-    error: err => {
-      console.error("API error:", err);
-      this.error = 'Failed to fetch movies.';
-      this.loading = false;
+      return;
     }
-  });
-}}
+
+    this.movieService.searchMovies(query).subscribe({
+      next: movies => {
+        this.movies = movies;
+        this.loading = false;
+      },
+      error: err => {
+        console.error("API error:", err);
+        this.error = err?.status === 429
+          ? 'Too many requests. Please try again later.'
+          : 'Failed to fetch movies.';
+        this.loading = false;
+      }
+    });
+  }
+}

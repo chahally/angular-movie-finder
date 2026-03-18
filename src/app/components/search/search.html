@@ -1,6 +1,14 @@
+<!-- Search Component Template
+
+Displays the search input and button.
+- Input: bound to 'query' variable via ngModel
+- Button: triggers onSearch() method when clicked
+-->
+
 <div class="search-container">
   <input
     [(ngModel)]="query"
+    (keyup.enter)="onSearch()"
     placeholder="Search movies..."
     class="search-input"
   />
