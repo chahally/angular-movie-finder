@@ -13,7 +13,7 @@ A modern Angular application that lets users search for movies using the TMDB AP
 
 ## Tech Stack
 
-- Angular 21 (Standalone Components)
+- Angular 21
 - TypeScript
 - TMDB API
 - RxJS for reactive programming
