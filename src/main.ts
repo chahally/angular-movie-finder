@@ -11,7 +11,7 @@ const routes: Route[] = [
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(),   // Enables HttpClient
-    provideRouter(routes)  // Registers Angular Router + routes
+    provideHttpClient(),
+    provideRouter(routes)
   ]
 }).catch(err => console.error(err));
